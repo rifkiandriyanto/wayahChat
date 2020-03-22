@@ -1,0 +1,15 @@
+{
+    "messages" : [ {
+      "incoming" : true,
+      "message" : "P"
+    }, {
+      "incoming" : false,
+      "message" : "Naon? Hayang nginjem duit? bayar heula nu kamarina"
+    }, {
+      "incoming" : true,
+      "message" : "anjir ulah suudzon kitu lah, pan nginejem ge mung 20 rebu padu jeung meli udud"
+    }, {
+      "incoming" : false,
+      "message" : "haruh"
+    } ]
+  }
