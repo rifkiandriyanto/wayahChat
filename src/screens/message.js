@@ -7,10 +7,11 @@ import {
   Dimensions,
 } from 'react-native';
 import styles from '../styles/styles';
+import Icon from 'react-native-vector-icons/Ionicons'
 import {db, auth, time} from '../config/config';
 import {FlatList} from 'react-native-gesture-handler';
 
-export default class ChatScreen extends Component {
+export default class MessageScreen extends Component {
   static navigationOptions = ({navigation}) => {
     console.log(navigation.getParam);
     return {
@@ -86,11 +87,12 @@ export default class ChatScreen extends Component {
     return (
       <View
         style={{
+          backgroundColor: '#dfe8e0',
           flexDirection: 'row',
           width: '60%',
           alignSelf:
             item.from === auth.currentUser.uid ? 'flex-end' : 'flex-start',
-          backgroundColor: item.from === auth.currentUser.uid ? 'red' : 'blue',
+          backgroundColor: item.from === auth.currentUser.uid ? '#99b09b' : '#c1dec4',
           borderRadius: 5,
           marginBottom: 10,
         }}>
@@ -124,15 +126,17 @@ export default class ChatScreen extends Component {
           <TextInput
             style={styles.input}
             value={this.state.textMessage}
-            placeholder="TYpe message..."
+            placeholder="Type a message"
             onChangeText={this.handleChange('textMessage')}
           />
 
           <TouchableOpacity
             onPress={this.sendMessage}
             style={{paddingBottom: 10, marginLeft: 5}}>
-            <Text style={styles.btnText}> Send </Text>
+             <Icon name="ios-send" style={{marginLeft: 10, fontSize: 35, color: '#707d72'}}></Icon>
+          
           </TouchableOpacity>
+          
         </View>
       </>
     );
