@@ -12,8 +12,7 @@ import {
   KeyboardAvoidingView,
   ToastAndroid,
 } from 'react-native';
-import { auth, db } from '../../config/config'
-
+import {auth, db} from '../../config/config';
 
 export default class RegisterScreen extends React.Component {
   static navigationOptions = {
@@ -21,7 +20,7 @@ export default class RegisterScreen extends React.Component {
   };
 
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       isVisible: false,
@@ -34,20 +33,17 @@ export default class RegisterScreen extends React.Component {
       errorMessage: null,
       loading: false,
       updatesEnabled: false,
-    }
+    };
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   componentDidMount() {
     this._isMounted = true;
-    
-  };
+  }
 
   componentWillUnmount() {
     this._isMounted = false;
-    
   }
-
 
   hideToast = () => {
     this.setState({
@@ -70,47 +66,46 @@ export default class RegisterScreen extends React.Component {
         ToastAndroid.LONG,
       );
     } else {
-      await auth.createUserWithEmailAndPassword(email, password)
+      // Action
+      await auth
+        .createUserWithEmailAndPassword(email, password)
         .then(async userCredentials => {
-          
           db.ref('/user/' + userCredentials.user.uid)
             .set({
               name: this.state.name,
               status: 'Online',
               email: this.state.email,
-              photo: "http://photourl.com/photo"
+              photo: 'http://photourl.com/photo',
+              uid: userCredentials.user.uid,
             })
-            .catch(error => console.log(error.message))
+            .catch(error => console.log(error.message));
 
-            console.log(userCredentials);
-            ToastAndroid.show("Success", ToastAndroid.LONG)
+          console.log(userCredentials);
+          ToastAndroid.show('Success', ToastAndroid.LONG);
 
-
-            if(userCredentials.user) {
-                userCredentials.user.updateProfile({
-                  displayName: this.state.name,
-                  photoURL: "http://linkphoto.com"
-                }).then((s) => {
-                  this.props.navigation.navigate("App")
-                })
-            }
-          
-          
+          if (userCredentials.user) {
+            userCredentials.user
+              .updateProfile({
+                displayName: this.state.name,
+                photoURL: 'http://linkphoto.com',
+              })
+              .then(s => {
+                this.props.navigation.navigate('App');
+              });
+          }
         })
         .catch(error => {
-          ToastAndroid.show(error.message, ToastAndroid.LONG)
-        })
-
-  }
-  }
+          ToastAndroid.show(error.message, ToastAndroid.LONG);
+        });
+    }
+  };
 
   render() {
-      return (
+    return (
       <View style={styles.container}>
-        <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4"></StatusBar>
+        <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4" />
         <ScrollView>
-                   
-          <Text style={styles.greeting}>{`Hello again.\nWelcome back.`}</Text>
+          <Text style={styles.greeting}>{'Hello again.\nWelcome back.'}</Text>
 
           <View style={styles.errorMessage}>
             {this.state.errorMessage && (
@@ -121,55 +116,55 @@ export default class RegisterScreen extends React.Component {
           <View style={styles.form}>
             <KeyboardAvoidingView behavior="padding" enabled>
               <View>
-                  <Text style={styles.inputTitle}>Full Name</Text>
-                  <TextInput
-                      style={styles.input}
-                      autoCapitalize="none"
-                      onChangeText={name => this.setState({ name })}
-                      value={this.state.name}
-                  ></TextInput>
+                <Text style={styles.inputTitle}>Full Name</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={name => this.setState({name})}
+                  value={this.state.name}
+                />
               </View>
 
-              <View style={{ marginTop: 20 }}>
-                  <Text style={styles.inputTitle}>Email Address</Text>
-                  <TextInput
-                      style={styles.input}
-                      autoCapitalize="none"
-                      onChangeText={email => this.setState({ email })}
-                      value={this.state.email}
-                  ></TextInput>
+              <View style={{marginTop: 20}}>
+                <Text style={styles.inputTitle}>Email Address</Text>
+                <TextInput
+                  style={styles.input}
+                  autoCapitalize="none"
+                  onChangeText={email => this.setState({email})}
+                  value={this.state.email}
+                />
               </View>
 
-              <View style={{ marginTop: 20 }}>
-                  <Text style={styles.inputTitle}>Password</Text>
-                  <TextInput
-                      style={styles.input}
-                      secureTextEntry
-                      autoCapitalize="none"
-                      onChangeText={password => this.setState({ password })}
-                      value={this.state.password}
-                  ></TextInput>
+              <View style={{marginTop: 20}}>
+                <Text style={styles.inputTitle}>Password</Text>
+                <TextInput
+                  style={styles.input}
+                  secureTextEntry
+                  autoCapitalize="none"
+                  onChangeText={password => this.setState({password})}
+                  value={this.state.password}
+                />
               </View>
-            </KeyboardAvoidingView>  
+            </KeyboardAvoidingView>
           </View>
 
           <TouchableOpacity style={styles.button} onPress={this.handleSignUp}>
-            <Text style={{ color: "#FFFFFF", fontWeight: "bold" }}>SIGN UP</Text>
+            <Text style={{color: '#FFFFFF', fontWeight: 'bold'}}>SIGN UP</Text>
           </TouchableOpacity>
-               
 
-          <TouchableOpacity style={{ alignSelf: "center", marginTop: 20 }} onPress={() => this.props.navigation.navigate('Login')}>
-            <Text style={{ color: "#414959", fontSize: 13 }}>
-                New to Firebase App? <Text style={{ fontWeight: "bold", color: "#000000" }}>Login</Text>
+          <TouchableOpacity
+            style={{alignSelf: 'center', marginTop: 20}}
+            onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={{color: '#414959', fontSize: 13}}>
+              New to Firebase App?{' '}
+              <Text style={{fontWeight: 'bold', color: '#000000'}}>Login</Text>
             </Text>
-        </TouchableOpacity>
-
+          </TouchableOpacity>
         </ScrollView>
       </View>
     );
   }
 }
-
 
 const Toast = props => {
   if (props.visible) {
@@ -194,7 +189,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: '400',
     textAlign: 'center',
-    color: "#000000",
+    color: '#000000',
   },
   form: {
     marginBottom: 48,
@@ -215,7 +210,7 @@ const styles = StyleSheet.create({
   button: {
     marginHorizontal: 30,
     marginBottom: 10,
-    backgroundColor: "#2295d4",
+    backgroundColor: '#2295d4',
     borderRadius: 10,
     height: 52,
     alignItems: 'center',

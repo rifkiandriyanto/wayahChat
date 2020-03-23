@@ -12,7 +12,7 @@ import {
   KeyboardAvoidingView,
   ToastAndroid,
 } from 'react-native';
-import { auth } from "\../../config/config"
+import { auth } from "../../config/config"
 
 export default class LoginScreen extends React.Component {
   static navigationOptions = {
