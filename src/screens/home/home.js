@@ -13,7 +13,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends Component {
   static navigationOptions = {
-    title: 'Message',
+    title: 'Wayah Chat',
     headerRight: (
       <TouchableOpacity>
         <Image style={{width: 32, height: 32}} />
@@ -22,7 +22,7 @@ class HomeScreen extends Component {
   };
 
   state = {
-    users: [],
+    user: [],
   };
 
   componentDidMount() {
@@ -87,6 +87,9 @@ class HomeScreen extends Component {
           />
           <TouchableOpacity onPress={this.onLogout}>
             <Text>Logout</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
+            <Text>Edit</Text>
           </TouchableOpacity>
         </View>
       </>
