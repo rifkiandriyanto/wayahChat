@@ -16,7 +16,7 @@ class ProfilScreen extends Component {
   render() {
     return (
       <>
-        <View style={{marginVertical: 200, alignItems: 'center'}}>
+        <View style={{marginVertical: 200, alignItems: 'center', flex: 1}}>
           <Text>Profile</Text>
           <Image
             style={{width: 50, height: 50}}

@@ -13,6 +13,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {auth, db} from '../../config/config';
+import styles from '../../styles/styles'
 
 export default class RegisterScreen extends React.Component {
   static navigationOptions = {
@@ -105,7 +106,7 @@ export default class RegisterScreen extends React.Component {
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4" />
         <ScrollView>
-          <Text style={styles.greeting}>{'Hello again.\nWelcome back.'}</Text>
+        <Image style={{margintop: 20, width: 250, height: 250}} source={require('../../styles/logo.png')} />
 
           <View style={styles.errorMessage}>
             {this.state.errorMessage && (
@@ -156,7 +157,6 @@ export default class RegisterScreen extends React.Component {
             style={{alignSelf: 'center', marginTop: 20}}
             onPress={() => this.props.navigation.navigate('Login')}>
             <Text style={{color: '#414959', fontSize: 13}}>
-              New to Firebase App?{' '}
               <Text style={{fontWeight: 'bold', color: '#000000'}}>Login</Text>
             </Text>
           </TouchableOpacity>
@@ -179,64 +179,3 @@ const Toast = props => {
   }
   return null;
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  greeting: {
-    marginTop: 50,
-    fontSize: 18,
-    fontWeight: '400',
-    textAlign: 'center',
-    color: '#000000',
-  },
-  form: {
-    marginBottom: 48,
-    marginHorizontal: 30,
-  },
-  inputTitle: {
-    color: '#8A8F9E',
-    fontSize: 10,
-    textTransform: 'uppercase',
-  },
-  input: {
-    borderBottomColor: '#8A8F9E',
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    height: 40,
-    fontSize: 15,
-    color: '#161F3D',
-  },
-  button: {
-    marginHorizontal: 30,
-    marginBottom: 10,
-    backgroundColor: '#2295d4',
-    borderRadius: 10,
-    height: 52,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  errorMessage: {
-    height: 72,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 30,
-  },
-  error: {
-    color: 'red',
-    fontSize: 13,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  back: {
-    position: 'absolute',
-    top: 48,
-    left: 32,
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: 'rgba(21, 22, 48, 0.1)',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

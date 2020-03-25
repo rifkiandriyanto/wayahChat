@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import styles from '../styles/styles';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -12,14 +13,15 @@ import {db, auth, time} from '../config/config';
 import {FlatList} from 'react-native-gesture-handler';
 
 export default class MessageScreen extends Component {
-
   static navigationOptions = ({navigation}) => {
     const userId = navigation.getParam('uid');
     return {
       headerTitle: (
-        
-        <TouchableOpacity onPress={() => navigation.navigate('DetailFriend', userId)}>
-          <Text style={{fontSize: 17}}>{navigation.getParam('name', null)}</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('DetailFriend', userId)}>
+          <Text style={{fontSize: 17}}>
+            {navigation.getParam('name', null)}
+          </Text>
         </TouchableOpacity>
       ),
     };
@@ -91,15 +93,15 @@ export default class MessageScreen extends Component {
 
   renderRow = ({item}) => {
     return (
+      
       <View
         style={{
-          backgroundColor: '#dfe8e0',
           flexDirection: 'row',
           width: '60%',
           alignSelf:
             item.from === auth.currentUser.uid ? 'flex-end' : 'flex-start',
           backgroundColor:
-            item.from === auth.currentUser.uid ? '#99b09b' : '#c1dec4',
+            item.from === auth.currentUser.uid ? '#b6caff' : '#99b09b',
           borderRadius: 5,
           marginBottom: 10,
         }}>
@@ -117,6 +119,7 @@ export default class MessageScreen extends Component {
     let {height, width} = Dimensions.get('window');
     return (
       <>
+      <View style={{backgroundColor:'#e3fae6', flex:1}}>
         <FlatList
           style={{padding: 10, height: height * 0.8}}
           data={this.state.messageList}
@@ -127,11 +130,11 @@ export default class MessageScreen extends Component {
         <View
           style={{
             flexDirection: 'row',
-            alignItems: 'center',
-            marginHorizontal: 5,
           }}>
-          <TextInput
-            style={styles.input}
+            
+        
+            <TextInput
+            style={styles.inputChat}
             value={this.state.textMessage}
             placeholder="Type a message"
             onChangeText={this.handleChange('textMessage')}
@@ -144,6 +147,10 @@ export default class MessageScreen extends Component {
               name="ios-send"
               style={{marginLeft: 10, fontSize: 35, color: '#b6caff'}}></Icon>
           </TouchableOpacity>
+         
+    
+         
+        </View>
         </View>
       </>
     );
