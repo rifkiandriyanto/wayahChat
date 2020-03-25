@@ -1,50 +1,34 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
-  AsyncStorage,
-  SafeAreaView,
-  TextInput,
-  Image,
+  TouchableOpacity,
   Alert,
+  Image,
   ActivityIndicator,
 } from 'react-native';
-import user from './user';
 import styles from '../../styles/styles';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {auth, db} from '../../config/config';
 import ImagePicker from 'react-native-image-picker';
 import firebase from 'firebase';
-export default class ProfileScreen extends React.Component {
+
+export default class ProfileScreen extends Component {
   static navigationOptions = {
     title: 'Profile',
   };
   state = {
-    name: user.name,
-    imageSource: user.image
-      ? {uri: user.image}
-      : require('../../styles/darth.png'),
+    imageSource: require('../../styles/darth.png'),
     upload: false,
   };
-  handleChange = key => val => {
-    this.setState({[key]: val});
+
+  onLogout = async () => {
+    auth.signOut().then(response => console.warn('Logout'));
   };
-  changeName = async () => {
-    if (this.state.name.length < 3) {
-      Alert.alert('Error', 'Please enter valid name');
-    } else if (user.name !== this.state.name) {
-      user.name = this.state.name;
-      this.updateUser();
-    }
-  };
-  _logOut = async () => {
-    await AsyncStorage.clear();
-    await firebase.auth().signOut;
-    this.props.navigation.navigate('Auth');
-  };
-  changeImage = () => {
+
+  changePhoto = () => {
     const options = {
-      quality: 0.7,
-      allowsEditing: true,
+      quality: 0.5,
+      allowEditing: true,
       mediaType: 'photo',
       noData: true,
       storageOptions: {
@@ -68,35 +52,35 @@ export default class ProfileScreen extends React.Component {
       }
     });
   };
-  updateUser = () => {
-    firebase
-      .database()
-      .ref('user')
-      .child(user.email)
-      .set(user);
-    Alert.alert('Success', 'succesfull.');
-  };
-  updateUserImage = imageUrl => {
-    user.image = imageUrl;
-    this.updateUser();
+
+  updateUserPhoto = async imageUrl => {
+    const userId = auth.currentUser.uid;
+    auth.currentUser.photo = imageUrl;
+    await db
+      .ref('/user/' + userId)
+      .child('photo')
+      .set(imageUrl);
+    Alert.alert('Succsess', 'Photo updated successfull');
     this.setState({upload: false, imageSource: {uri: imageUrl}});
   };
+
   uploadFile = async () => {
     const file = await this.uriToBlob(this.state.imageSource.uri);
-    await firebase
+    firebase
       .storage()
-      .ref(`profile_pictures/${user.email}.png`)
+      .ref(`profilePhotos/${auth.currentUser.uid}.png`)
       .put(file)
       .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(url => this.updateUserImage(url))
+      .then(url => this.updateUserPhoto(url))
       .catch(error => {
         this.setState({
           upload: false,
           imageSource: require('../../styles/darth.png'),
         });
-        Alert.alert(error, 'Error upload image');
+        Alert(error, 'Failed to update photo');
       });
   };
+
   uriToBlob = uri => {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
@@ -104,7 +88,7 @@ export default class ProfileScreen extends React.Component {
         resolve(xhr.response);
       };
       xhr.onerror = function() {
-        reject(new Error('Error on upload image'));
+        reject(new Error('Failed to update photo'));
       };
       xhr.responseType = 'blob';
       xhr.open('GET', uri, true);
@@ -113,35 +97,22 @@ export default class ProfileScreen extends React.Component {
   };
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={this.changeImage}>
+      <View style={styles.container}>
+        <Text> profile </Text>
+        <TouchableOpacity onPress={this.changePhoto}>
           {this.state.upload ? (
             <ActivityIndicator size="large" />
           ) : (
             <Image
-              style={{
-                width: 100,
-                borderRadius: 100,
-                height: 100,
-                resizeMode: 'cover',
-              }}
+              style={styles.imageProfile}
               source={this.state.imageSource}
             />
           )}
         </TouchableOpacity>
-        <Text style={{fontSize: 20}}>{user.email}</Text>
-        <TextInput
-          style={styles.input}
-          value={this.state.name}
-          onChangeText={this.handleChange('name')}
-        />
-        <TouchableOpacity onPress={this.changeName}>
-          <Text style={styles.btnText}>Change name</Text>
+        <TouchableOpacity onPress={this.onLogout}>
+          <Text>Logout</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={this._logOut}>
-          <Text style={styles.btnText}>Logout</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      </View>
     );
   }
 }

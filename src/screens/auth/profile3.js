@@ -1,50 +1,37 @@
-import React, {useReducer} from 'react';
+import React, {Component} from 'react';
 import {
   View,
   Text,
-  TextInput,
-  SafeAreaView,
-  TouchableOpacity,
-  FlatList,
-  Keyboard,
   ActivityIndicator,
+  TouchableOpacity,
+  Image,
+  Alert,
 } from 'react-native';
+import styles from '../../styles/styles'
+import {auth, db} from '../../config/config'
 import ImagePicker from 'react-native-image-picker';
-import db from '../../config/config';
-import user from '../../config/config';
-import styles from '../../styles/styles';
+import firebase from 'firebase';
 
-export default class ProfileScreen extends React.Component {
+export default class ProfilScreen extends Component {
   static navigationOptions = {
     title: 'Profile',
   };
 
   state = {
-    name: user.name,
-    image: user.image ? {uri: user.image} : require('../../styles/darth.png'),
+    imageSource: require('../../styles/darth.png'),
+    upload: false,
   };
-  handleChange = key => val => {
-    this.setState({key: val});
-  };
-
-  _logout = async () => {
-    await AsyncStorage.clear();
-    this.props.navigation.navigate('Auth');
-  };
-
-  changeName = async () => {
-    if (this.state.name.length < 3) {
-      Alert.alert('Error', 'Please valid User name');
-    } else if (user.name !== this.state.name) {
-      user.name = this.state.name;
-      this.updateUser();
-    }
+  
+  onLogout = async () => {
+      const id = auth.currentUser.uid
+      await db.ref('/user/' + id ).child("status").set('offline')
+    auth.signOut().then(res => console.warn('oke'));
   };
 
   changeImage = () => {
     const options = {
       quality: 0.7,
-      allowEditing: true,
+      allowsEditing: true,
       mediaType: 'photo',
       noData: true,
       storageOptions: {
@@ -54,7 +41,6 @@ export default class ProfileScreen extends React.Component {
         cameraRoll: true,
       },
     };
-
     ImagePicker.showImagePicker(options, response => {
       if (response.error) {
         console.log(error);
@@ -70,17 +56,29 @@ export default class ProfileScreen extends React.Component {
     });
   };
 
-  updateUser = () => {
-    db.ref('user')
-      .child(`/${this.state.uid}/`)
-      .set(user);
-    useReducer.name = this.state.name;
-    Alert.alert('Success', 'Name changed success');
-  };
+  updateUserImage = async (imageUrl) => {
+    const id = auth.currentUser.uid
+      auth.currentUser.photo = imageUrl
+    await  db.ref('/user/' + id ).child('photo').set(imageUrl)
+      Alert.alert('Succes', 'image changed successfull')
+      this.setState({ upload: false, imageSource: { uri: imageUrl}})
+  }
 
-  updateUserImage = imageUrl => {
-    user.image = imageUrl;
-    this.setState({upload: false, imageSource: {uri: imageUri}});
+  uploadFile = async () => {
+    const file = await this.uriToBlob(this.state.imageSource.uri);
+    firebase
+      .storage()
+      .ref(`profile/${auth.currentUser.uid}.png`)
+      .put(file)
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => this.updateUserImage(url))
+      .catch(error => {
+        this.setState({
+          upload: false,
+          imageSource: require('../../styles/darth.png'),
+        });
+        Alert.alert('Error', 'Error on upload Image');
+      });
   };
 
   uriToBlob = uri => {
@@ -89,9 +87,11 @@ export default class ProfileScreen extends React.Component {
       xhr.onload = function() {
         resolve(xhr.response);
       };
+
       xhr.onerror = function() {
-        reject(new Error('error upload on xml'));
+        reject(new Error('Error on upload image'));
       };
+
       xhr.responseType = 'blob';
       xhr.open('GET', uri, true);
       xhr.send(null);
@@ -100,30 +100,31 @@ export default class ProfileScreen extends React.Component {
 
   render() {
     return (
-      <SafeAreaView style={styles.container}>
-        <TouchableOpacity onPress={this.changeImage}>
-          {this.state.upload ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <Image
-              style={{width: 100, borderRadius: 100, height: 100}}
-              source={this.state.imageSource}
-            />
-          )}
-        </TouchableOpacity>
-        <Text style={{fontSize: 20}}>{user.uid}</Text>
-        <TextInput
-          style={styles.input}
-          values={this.state.name}
-          onChangeText={this.handleChange('name')}
-        />
-        <TouchableOpacity onPress={this.changeName}>
-          <Text style={styles.btnText}> Change Name</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this._logout}>
-          <Text style={styles.btnText}>Logout</Text>
-        </TouchableOpacity>
-      </SafeAreaView>
+      <>
+        <View style={{marginVertical: 200, alignItems: 'center'}}>
+          <Text>Ini foto</Text>
+          <TouchableOpacity onPress={this.changeImage}>
+            {this.state.upload ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <Image
+                style={{
+                  width: 100,
+                  height: 100,
+                  borderRadius: 100,
+                  resizeMode: 'cover',
+                  marginBottom: 10,
+                }}
+                source={this.state.imageSource}
+              />
+            )}
+          </TouchableOpacity>
+          <Text>{auth.currentUser.displayName}</Text>
+          <TouchableOpacity onPress={this.onLogout}>
+            <Text>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </>
     );
   }
 }

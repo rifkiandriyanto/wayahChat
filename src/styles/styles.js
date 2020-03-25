@@ -94,6 +94,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textProfile:{
+    fontSize: 15
+  },
+  nameProfile: {
+    fontSize: 25, fontWeight: 'bold'
+  },
+  imageProfile: {
+    width: 100,
+    height: 100,
+    borderRadius: 100,
+    resizeMode: 'cover',
+    marginBottom: 10,
+  }
 });
 
 export default styles;
