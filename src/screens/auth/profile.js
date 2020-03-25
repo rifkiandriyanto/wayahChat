@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
 import styles from '../../styles/styles';
+import { Footer, FooterTab, Button, Icon } from 'native-base';
 import {auth, db} from '../../config/config';
 
 class ProfilScreen extends Component {
@@ -26,6 +27,21 @@ class ProfilScreen extends Component {
             <Text>Logout</Text>
           </TouchableOpacity>
         </View>
+
+        <Footer>
+          <FooterTab style={{backgroundColor: 'white'}}>
+            <Button onPress={() => this.props.navigation.navigate('Home')}>
+              <Icon name="chatbubbles" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Map')}>
+              <Icon name="navigate" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Profile')}>
+              <Icon name="person" />
+            </Button>
+          </FooterTab>
+        </Footer>
+
       </>
     );
   }

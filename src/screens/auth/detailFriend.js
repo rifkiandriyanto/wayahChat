@@ -1,32 +1,35 @@
 import React, {Component} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
+import {Text, View, FlatList, Image} from 'react-native';
 import {db} from '../../config/config';
 
 export default class DetailFriend extends Component {
   state = {
     users: [],
   };
-
-  getDetail() {
+  componentDidMount() {
+    this.detailProfile();
+  }
+  detailProfile() {
     const userId = this.props.navigation.state.params;
-    db.ref('/user' + userId).on('value', snapshot => {
+    db.ref('/user/' + userId).on('value', snapshot => {
+      const data = snapshot.val();
+      const users = Object.values(data);
+      this.setState({users});
       console.log(snapshot.val());
+      console.log(users.email)
     });
   }
 
-  componentDidMount() {
-    this.getDetail();
-  }
-  //   renderRow = ({users}) => {
-  //     return(
-  //         <View style={{ margin: 10, flexDirection: 'row' }}>
-  //             <Text style={{ padding: 10 }}>Name : {users.name}</Text>
-  //         </View>
-  //     )
-  // }
-
   render() {
-    console.disableYellowBox = true;
-    return <View style={{flex: 1, flexDirection: 'column'}}></View>;
+    return (
+      <>
+        <View style={{marginVertical: 200, alignItems: 'center'}}>
+          <Text>Profile</Text>
+ 
+          {/* <Text>{this.state.users.name}</Text> */}
+
+        </View>
+      </>
+    );
   }
 }

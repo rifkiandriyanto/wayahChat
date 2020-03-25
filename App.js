@@ -7,12 +7,14 @@ import RegisterScreen from './src/screens/auth/register';
 import MessageScreen from './src/screens/message';
 import ProfileScreen from './src/screens/auth/profile';
 import DetailFriendScreen from './src/screens/auth/detailFriend';
+import MapScreen from './src/screens/map'
 
 const AppStack = createStackNavigator({
   Home: HomeScreen,
   Message: MessageScreen,
   Profile: ProfileScreen,
   DetailFriend: DetailFriendScreen,
+  Map: MapScreen
 });
 
 const AuthStack = createStackNavigator({

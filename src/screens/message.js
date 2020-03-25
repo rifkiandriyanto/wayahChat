@@ -14,11 +14,12 @@ import {FlatList} from 'react-native-gesture-handler';
 export default class MessageScreen extends Component {
 
   static navigationOptions = ({navigation}) => {
-    const users = navigation.getParam('uid');
+    const userId = navigation.getParam('uid');
     return {
       headerTitle: (
-        <TouchableOpacity onPress={() => navigation.navigate('DetailFriend', users)}>
-          <Text>{navigation.getParam('name', null)}</Text>
+        
+        <TouchableOpacity onPress={() => navigation.navigate('DetailFriend', userId)}>
+          <Text style={{fontSize: 17}}>{navigation.getParam('name', null)}</Text>
         </TouchableOpacity>
       ),
     };
@@ -141,7 +142,7 @@ export default class MessageScreen extends Component {
             style={{paddingBottom: 10, marginLeft: 5}}>
             <Icon
               name="ios-send"
-              style={{marginLeft: 10, fontSize: 35, color: '#707d72'}}></Icon>
+              style={{marginLeft: 10, fontSize: 35, color: '#b6caff'}}></Icon>
           </TouchableOpacity>
         </View>
       </>

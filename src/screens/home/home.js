@@ -5,11 +5,11 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
-  Container,
 } from 'react-native';
+import { Container, Header, Content, Footer, FooterTab, Button, Icon } from 'native-base';
 import {db, auth} from '../../config/config';
 import styles from '../../styles/styles';
-import Icon from 'react-native-vector-icons/Ionicons';
+// import Icon from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends Component {
   static navigationOptions = {
@@ -49,7 +49,7 @@ class HomeScreen extends Component {
   renderRow = ({item}) => {
     return (
       <>
-        <View style={{backgroundColor: '#e3fae6'}}>
+        <View >
           <View
             style={styles.home}>
             <TouchableOpacity
@@ -77,6 +77,7 @@ class HomeScreen extends Component {
     console.disableYellowBox = true;
     return (
       <>
+      <View style={{backgroundColor: '#e3fae6',flex:1}}>
         <View>
           <FlatList
             data={this.state.users}
@@ -85,16 +86,32 @@ class HomeScreen extends Component {
               item.uid;
             }}
           />
-          <TouchableOpacity onPress={this.onLogout}>
-            <Text>Logout</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => this.props.navigation.navigate('Profile')}>
-            <Text>Edit</Text>
-          </TouchableOpacity>
-        </View>
+       </View>
+          </View>
+
+      
+
+          <Footer>
+          <FooterTab style={{backgroundColor: 'white'}}>
+            <Button onPress={() => this.props.navigation.navigate('Home')}>
+              <Icon name="chatbubbles" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Map')}>
+              <Icon name="navigate" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Profile')}>
+              <Icon name="person" />
+            </Button>
+          </FooterTab>
+        </Footer>
+
+         
+        
+      
       </>
     );
   }
+  
 }
 export default HomeScreen;
 
