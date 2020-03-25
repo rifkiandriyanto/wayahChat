@@ -26,11 +26,12 @@ export default createAppContainer(
   createSwitchNavigator(
     {
       AuthLoading: AuthLoadingScreen,
-      App: AppStack,
+      App: App,
+      AppStack: AppStack,
       Auth: AuthStack,
     },
     {
       initialRouteName: 'AuthLoading',
     },
   ),
-)
+);

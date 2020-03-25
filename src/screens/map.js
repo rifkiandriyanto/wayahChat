@@ -1,32 +1,22 @@
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
-import GetLocation from 'react-native-get-location';
 import {db, auth} from '../config/config';
 
-
-
 export default class MapScreen extends Component {
+
+    static navigationOptions = {
+        title: 'User Location',
+      };
+
     state = {
         user: [],
       };
 
   componentDidMount() {
-    this.getLocaction();
-    //     GetLocation.getCurrentPosition({
-    //         enableHighAccuracy: true,
-    //         timeout: 30000,
-
-    //     })
-    //     .then (location => {
-    //         console.log(location)
-
-    //     })
-    //     .catch(error => {
-    //         console.warn(error, ' Get Location Error')
-    //     })
+    this.userLocation();
   }
 
-  getLocaction() {
+  userLocation() {
     db.ref('/user').on('value', snapshot => {
       const current_user = auth.currentUser.uid;
       const data = snapshot.val();
@@ -51,8 +41,8 @@ export default class MapScreen extends Component {
         <MapView
             style={{ flex: 1, width: window.width }} //window pake Dimensions
             region={{
-                latitude: -6.1750,
-                longitude: 106.8283,
+                latitude: -6.6210828,
+                longitude: 106.8185388,
                 latitudeDelta: 0.0922,
                 longitudeDelta: 0.0421 
             }} >
