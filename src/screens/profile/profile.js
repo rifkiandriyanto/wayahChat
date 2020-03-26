@@ -7,10 +7,12 @@ import {
   Image,
   ActivityIndicator,
 } from 'react-native';
-import styles from '../../styles/styles';
+import { Footer, FooterTab, Button, Icon } from 'native-base';
+import styles from './styles';
 import {auth, db} from '../../config/config';
 import ImagePicker from 'react-native-image-picker';
 import firebase from 'firebase';
+
 
 export default class ProfileScreen extends Component {
   static navigationOptions = {
@@ -97,22 +99,47 @@ export default class ProfileScreen extends Component {
   };
   render() {
     return (
-      <View style={styles.container}>
-        <Text> profile </Text>
-        <TouchableOpacity onPress={this.changePhoto}>
-          {this.state.upload ? (
-            <ActivityIndicator size="large" />
-          ) : (
-            <Image
-              style={styles.imageProfile}
-              source={this.state.imageSource}
-            />
-          )}
-        </TouchableOpacity>
-        <TouchableOpacity onPress={this.onLogout}>
-          <Text>Logout</Text>
-        </TouchableOpacity>
-      </View>
+      <>
+        <View style={styles.container}>
+          <TouchableOpacity onPress={this.changePhoto}>
+            {this.state.upload ? (
+              <ActivityIndicator size="large" />
+            ) : (
+              <Image style={{width: 100,
+                height: 100,
+                borderRadius: 100,
+                resizeMode: 'cover',
+                marginTop: 220,}} 
+                source={this.state.imageSource} />
+            )}
+          </TouchableOpacity>
+
+          <View style={styles.body}>
+            <View style={styles.bodyContent}>
+              <Text style={styles.name}>{auth.currentUser.displayName}</Text>
+              <TouchableOpacity
+                style={styles.buttonContainer}
+                onPress={this.onLogout}>
+                <Text>Logout</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+
+        <Footer>
+          <FooterTab style={{backgroundColor: 'white'}}>
+            <Button onPress={() => this.props.navigation.navigate('Home')}>
+              <Icon name="chatbubbles" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Map')}>
+              <Icon name="navigate" />
+            </Button>
+            <Button onPress={() => this.props.navigation.navigate('Profile')}>
+              <Icon name="person" />
+            </Button>
+          </FooterTab>
+        </Footer>
+      </>
     );
   }
 }

@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#dfe8e0',
+    backgroundColor: '#e3fae6',
   },
   inputChat: {
     padding: 10,

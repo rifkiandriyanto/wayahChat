@@ -88,10 +88,7 @@ class HomeScreen extends Component {
           />
        </View>
           </View>
-
-      
-
-          <Footer>
+         <Footer>
           <FooterTab style={{backgroundColor: 'white'}}>
             <Button onPress={() => this.props.navigation.navigate('Home')}>
               <Icon name="chatbubbles" />
@@ -105,9 +102,6 @@ class HomeScreen extends Component {
           </FooterTab>
         </Footer>
 
-         
-        
-      
       </>
     );
   }

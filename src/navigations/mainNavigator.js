@@ -5,7 +5,7 @@ import LoginScreen from '../screens/auth/login';
 import AuthLoadingScreen from '../screens/auth/loading';
 import RegisterScreen from '../screens/auth/register';
 import MessageScreen from '../screens/message';
-import ProfileScreen from '../screens/auth/profile';
+import ProfileScreen from '../screens/profile/profile';
 import DetailFriendScreen from '../screens/auth/detailFriend';
 import MapScreen from '../screens/map'
 

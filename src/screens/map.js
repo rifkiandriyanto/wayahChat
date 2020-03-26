@@ -41,11 +41,11 @@ export default class MapScreen extends Component {
         <MapView
             style={{ flex: 1, width: window.width }} //window pake Dimensions
             region={{
-                latitude: -6.6210828,
-                longitude: 106.8185388,
-                latitudeDelta: 0.0922,
-                longitudeDelta: 0.0421 
-            }} >
+              latitude: -6.1750,
+              longitude: 106.8283,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421 
+          }} >
             {marker}
          </MapView>
          </>

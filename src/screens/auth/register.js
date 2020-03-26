@@ -13,7 +13,7 @@ import {
   ToastAndroid,
 } from 'react-native';
 import {auth, db} from '../../config/config';
-import styles from '../../styles/styles'
+import GetLocation from 'react-native-get-location'
 
 export default class RegisterScreen extends React.Component {
   static navigationOptions = {
@@ -34,11 +34,23 @@ export default class RegisterScreen extends React.Component {
       errorMessage: null,
       loading: false,
       updatesEnabled: false,
+      location: []
     };
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
+    await GetLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000
+    })
+    .then(location => {
+      console.log(location)
+      this.setState({location: location})
+    })
+    .catch(error => {
+      console.log.warn(error.message)
+    })
     this._isMounted = true;
   }
 
@@ -78,6 +90,8 @@ export default class RegisterScreen extends React.Component {
               email: this.state.email,
               photo: 'http://photourl.com/photo',
               uid: userCredentials.user.uid,
+              latitude: this.state.location.latitude,
+              longitude: this.state.location.longitude
             })
             .catch(error => console.log(error.message));
 
@@ -105,8 +119,11 @@ export default class RegisterScreen extends React.Component {
     return (
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#f4f4f4" />
-        <ScrollView>
-        <Image style={{margintop: 20, width: 250, height: 250}} source={require('../../styles/logo.png')} />
+        <ScrollView >
+          <View style={{marginTop: 50, alignItems: 'center'}}>
+          <Image style={{width: 250, height: 250, }} source={require('../../styles/logo.png')} />
+          </View>
+        
 
           <View style={styles.errorMessage}>
             {this.state.errorMessage && (
@@ -179,3 +196,59 @@ const Toast = props => {
   }
   return null;
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#e3fae6'
+  },
+
+  form: {
+    marginBottom: 20,
+    marginHorizontal: 30,
+  },
+  inputTitle: {
+    color: '#8A8F9E',
+    fontSize: 10,
+    textTransform: 'uppercase',
+  },
+  input: {
+    borderBottomColor: '#8A8F9E',
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    height: 40,
+    fontSize: 15,
+    color: '#161F3D',
+  },
+  button: {
+    marginHorizontal: 30,
+    marginBottom: 10,
+    backgroundColor: "#2295d4",
+    borderRadius: 10,
+    height: 52,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  errorMessage: {
+    height: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginHorizontal: 30,
+  },
+  error: {
+    color: 'red',
+    fontSize: 13,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  back: {
+    position: 'absolute',
+    top: 48,
+    left: 32,
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    backgroundColor: 'rgba(21, 22, 48, 0.1)',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
