@@ -16,7 +16,17 @@ import firebase from 'firebase';
 
 export default class ProfileScreen extends Component {
   static navigationOptions = {
-    title: 'Profile',
+    title: null,
+    headerTitleStyle: {
+      color: '#b6caff'
+    },
+    headerLeft: null,
+    headerStyle: {backgroundColor: '#324191'},
+    headerRight: (
+      <TouchableOpacity>
+        <Image style={{width: 32, height: 32}} />
+      </TouchableOpacity>
+    ),
   };
   state = {
     imageSource: require('../../styles/darth.png'),
@@ -144,7 +154,7 @@ export default class ProfileScreen extends Component {
         </View>
 
         <Footer>
-          <FooterTab style={{backgroundColor: 'white'}}>
+          <FooterTab>
             <Button onPress={() => this.props.navigation.navigate('Home')}>
               <Icon name="chatbubbles" />
             </Button>

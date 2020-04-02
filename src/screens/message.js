@@ -16,16 +16,30 @@ export default class MessageScreen extends Component {
   static navigationOptions = ({navigation}) => {
     const userId = navigation.getParam('uid');
     return {
+      headerStyle: {backgroundColor: '#324191'},
       headerTitle: (
         <TouchableOpacity
           onPress={() => navigation.navigate('DetailFriend', userId)}>
-          <Text style={{fontSize: 17}}>
+          <Text style={{fontSize: 17,  color: '#b6caff'}}>
             {navigation.getParam('name', null)}
           </Text>
         </TouchableOpacity>
       ),
     };
   };
+
+  // static navigationOptions = {
+  //   title: 'Wayah Chat',
+  //   headerTitleStyle: {
+  //     color: '#b6caff'
+  //   },
+  //   headerStyle: {backgroundColor: '#324191'},
+  //   headerRight: (
+  //     <TouchableOpacity>
+  //       <Image style={{width: 32, height: 32}} />
+  //     </TouchableOpacity>
+  //   ),
+  // };
 
   constructor(props) {
     super(props);

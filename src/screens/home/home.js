@@ -16,6 +16,10 @@ import getLocation from 'react-native-get-location'
 class HomeScreen extends Component {
   static navigationOptions = {
     title: 'Wayah Chat',
+    headerTitleStyle: {
+      color: '#b6caff'
+    },
+    headerStyle: {backgroundColor: '#324191'},
     headerRight: (
       <TouchableOpacity>
         <Image style={{width: 32, height: 32}} />
@@ -120,7 +124,7 @@ class HomeScreen extends Component {
        </View>
           </View>
          <Footer>
-          <FooterTab style={{backgroundColor: 'white'}}>
+          <FooterTab >
             <Button onPress={() => this.props.navigation.navigate('Home')}>
               <Icon name="chatbubbles" />
             </Button>

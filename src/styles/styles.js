@@ -106,7 +106,15 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     resizeMode: 'cover',
     marginBottom: 10,
+  },
+  detailFriend: {
+    flexDirection: 'row',
+    backgroundColor:'white',
+    marginBottom: 5,
+    height:50,
+    alignItems: 'center'
   }
+  
 });
 
 export default styles;

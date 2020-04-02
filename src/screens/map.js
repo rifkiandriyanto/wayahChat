@@ -1,16 +1,25 @@
 import React, {Component} from 'react';
 import MapView from 'react-native-maps';
 import {db, auth} from '../config/config';
+import {TouchableOpacity, Image} from 'react-native';
 
 export default class MapScreen extends Component {
+  static navigationOptions = {
+    title: 'Friend Location',
+    headerTitleStyle: {
+      color: '#b6caff',
+    },
+    headerStyle: {backgroundColor: '#324191'},
+    headerRight: (
+      <TouchableOpacity>
+        <Image style={{width: 32, height: 32}} />
+      </TouchableOpacity>
+    ),
+  };
 
-    static navigationOptions = {
-        title: 'User Location',
-      };
-
-    state = {
-        user: [],
-      };
+  state = {
+    user: [],
+  };
 
   componentDidMount() {
     this.userLocation();
@@ -28,27 +37,29 @@ export default class MapScreen extends Component {
   }
 
   render() {
-    const marker = this.state.user.map((item) =>  <MapView.Marker
-    coordinate={{
-        latitude: item.latitude,
-        longitude: item.longitude,
-    }}
-    title={item.name}
-    description="Iam Here" />
-    ) 
+    const marker = this.state.user.map(item => (
+      <MapView.Marker
+        coordinate={{
+          latitude: item.latitude,
+          longitude: item.longitude,
+        }}
+        title={item.name}
+        description="Iam Here"
+      />
+    ));
     return (
-        <>
+      <>
         <MapView
-            style={{ flex: 1, width: window.width }} //window pake Dimensions
-            region={{
-              latitude: -6.6210828,
-              longitude: 106.8185388,
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421 
-          }} >
-            {marker}
-         </MapView>
-         </>
+          style={{flex: 1, width: window.width}} //window pake Dimensions
+          region={{
+            latitude: -6.6210828,
+            longitude: 106.8185388,
+            latitudeDelta: 0.0922,
+            longitudeDelta: 0.0421,
+          }}>
+          {marker}
+        </MapView>
+      </>
     );
   }
 }

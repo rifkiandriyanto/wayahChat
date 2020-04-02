@@ -11,6 +11,7 @@ import MessageScreen from '../screens/message';
 import ProfileScreen from '../screens/profile/profile';
 import DetailFriendScreen from '../screens/auth/detailFriend';
 import MapScreen from '../screens/map';
+import FriendLocationScreen from '../screens/friendLocation';
 
 const AppStack = createStackNavigator({
   Home: HomeScreen,
@@ -18,6 +19,7 @@ const AppStack = createStackNavigator({
   Profile: ProfileScreen,
   DetailFriend: DetailFriendScreen,
   Map: MapScreen,
+  FriendLocation: FriendLocationScreen,
 });
 
 const AuthStack = createStackNavigator({
