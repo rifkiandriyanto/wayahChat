@@ -21,7 +21,22 @@ export default class ProfileScreen extends Component {
   state = {
     imageSource: require('../../styles/darth.png'),
     upload: false,
+    users: []
   };
+
+  getDataUser() {
+    const id = auth.currentUser.uid;
+    db.ref('/user/' + id).on('value', snapshot => {
+      const data = snapshot.val();
+      this.setState({
+        users: data,
+      });
+    });
+  }
+
+  componentDidMount(){
+    this.getDataUser()
+  }
 
   onLogout = async () => {
     auth.signOut().then(response => console.warn('Logout'));
@@ -110,9 +125,11 @@ export default class ProfileScreen extends Component {
                 borderRadius: 100,
                 resizeMode: 'cover',
                 marginTop: 220,}} 
-                source={this.state.imageSource} />
-            )}
+                source={this.state.imageSource === '' ? {uri: `${this.state.users.photo}`} : this.state.imageSource}
+                />
+              )}
           </TouchableOpacity>
+
 
           <View style={styles.body}>
             <View style={styles.bodyContent}>

@@ -1,13 +1,12 @@
 import React, {Component} from 'react';
 import {Text, View, FlatList, Image} from 'react-native';
 import {db} from '../../config/config';
-import styles from '../../styles/styles';
+import styles from '../profile/styles';
 
 export default class DetailFriend extends Component {
 static navigationOption = {
-  header: "Detail Friend"
+  header: "Friend"
 }
-
 
   state = {
     items: [],
@@ -39,6 +38,7 @@ static navigationOption = {
           <Text style={styles.textProfile}>{this.state.items.email}</Text>
 
         </View>
+
       </>
     );
   }

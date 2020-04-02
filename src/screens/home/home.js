@@ -5,10 +5,12 @@ import {
   TouchableOpacity,
   Image,
   FlatList,
+  Dimensions
 } from 'react-native';
 import { Container, Header, Content, Footer, FooterTab, Button, Icon } from 'native-base';
 import {db, auth} from '../../config/config';
 import styles from '../../styles/styles';
+import getLocation from 'react-native-get-location'
 // import Icon from 'react-native-vector-icons/Ionicons';
 
 class HomeScreen extends Component {
@@ -23,10 +25,38 @@ class HomeScreen extends Component {
 
   state = {
     user: [],
+    latitude: '',
+    longitude: '',
+    imageSource: require('../../styles/darth.png'),
   };
 
   componentDidMount() {
     this.getDataUser();
+  }
+
+  sendLocation() {
+    const id = auth.currentUser.uid;
+    getLocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 15000,
+    })
+      .then(location => {
+        db.ref('/user/' + id)
+          .child('status')
+          .set('online');
+        db.ref('/user/' + id)
+          .child('latitude')
+          .set(location.latitude);
+        db.ref('/user/' + id)
+          .child('longitude')
+          .set(location.longitude);
+      })
+      .catch(error => {
+        const {code, message} = error;
+        console.warn(code, message);
+      });
+
+    this._isMounted = true;
   }
 
   getDataUser() {
@@ -54,7 +84,7 @@ class HomeScreen extends Component {
             style={styles.home}>
             <TouchableOpacity
               onPress={() => this.props.navigation.navigate('Message', item)}>
-              <Image
+               <Image
                 style={{
                   width: 50,
                   height: 50,
@@ -63,6 +93,7 @@ class HomeScreen extends Component {
                   marginLeft: 15
                 }}
                 source={require('../../styles/darth.png')}></Image>
+
             </TouchableOpacity>
             <View style={{marginLeft: 20, marginTop: 35}}>
               <Text>{item.name}</Text>
@@ -108,4 +139,3 @@ class HomeScreen extends Component {
   
 }
 export default HomeScreen;
-
