@@ -31,7 +31,6 @@ class HomeScreen extends Component {
     user: [],
     latitude: '',
     longitude: '',
-    imageSource: require('../../styles/darth.png'),
   };
 
   componentDidMount() {
