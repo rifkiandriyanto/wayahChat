@@ -1,23 +1,23 @@
+[![React Native][react_native-badge]][react_native-url]
+[![Android Platform][android_platform-badge]][android_platform-url]
+[![Android Studio][android_studio-badge]][android_studio-url]
+
+# React Native Firebase Chat
 <p align="center">
   <img src="Images/11.png" alt="FirebaseChat" title="FirebaseChat" />
 </p>
 
-# React Native Firebase Chat
 
-[![Build Status][ico-travis]][link-travis]
-[![React Native][react_native-badge]][react_native-url]
-[![Android Platform][android_platform-badge]][android_platform-url]
-[![Android Studio][android_studio-badge]][android_studio-url]
-[![Codebeat][codebeat-badge]][codebeat-url]
-
-React Native chat application using Firebase backend. 
+## Introducing
+WayahChat is an android real-time chat application with a minimalist design and
+ easy to use for users. You can also track the user's location
+easily. Created using React Native, google maps API and Firebase databases.
 
 In this project We have used following Firebase serivces.
-* **Firebase Authentication** : For authentication user by phone number
+* **Firebase Authentication** : For authentication user by email
 * **Firebase RealTime Database** : That's we for handle realtime chat
 * **Firebase Storage** : That's we use for store user profile image
 
-BinBytes is an mobile & web application development agency in Rajkot, India. You'll find an overview of all our services [on our website](https://binbytes.com).
 
 ## Requirements
 
@@ -51,7 +51,7 @@ git clone git@github.com:rifkiandriyanto/wayahChat.git && cd wayahChat && npm in
 (For download `google-services.json` use [this](https://support.google.com/firebase/answer/7015592))
 
 ### 3. Setup google maps API in Android
--Create API google maps [instruction](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=id)
+- Create API google maps [instruction](https://developers.google.com/maps/documentation/javascript/get-api-key?hl=id)
 edit android manifest json copy your API key
 
 ### 4. Make sure you have started an emulator and run the app on Android
@@ -75,6 +75,3 @@ MIT License. Please see the [license file](LICENSE.md) for more information.
 [android_studio-badge]: https://img.shields.io/badge/Android%20Studio-3.2.1+-green.svg
 [android_studio-url]: https://developer.android.com/studio/install
 [codebeat-badge]: https://codebeat.co/badges/f22bd54a-d944-440d-aa4d-3a99f79b41d3
-[codebeat-url]: https://codebeat.co/projects/github-com-binbytes-react-native-firebase-chat-master
-[ico-travis]: https://img.shields.io/travis/binbytes/laravel-model-media-backup/master.svg?style=flat-square
-[link-travis]: https://travis-ci.org/binbytes/react-native-firebase-chat
