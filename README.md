@@ -2,7 +2,7 @@
 [![Android Platform][android_platform-badge]][android_platform-url]
 [![Android Studio][android_studio-badge]][android_studio-url]
 
-# React Native Firebase Chat
+# WayahChat with React Native and Firebase
 <p align="center">
   <img src="Images/11.png" alt="FirebaseChat" title="FirebaseChat" />
 </p>
