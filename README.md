@@ -46,7 +46,7 @@ git clone git@github.com:rifkiandriyanto/wayahChat.git && cd wayahChat && npm in
 ```
 
 ### 2. Setup firebase in Android
-- Download `google-services.json` from Firebase Project and copy it to `react-native-firebase-chat/android/app`
+- Download `google-services.json` from Firebase Project and copy it to `wayahChat/src/config/config.js`
 
 (For download `google-services.json` use [this](https://support.google.com/firebase/answer/7015592))
 
@@ -74,4 +74,3 @@ MIT License. Please see the [license file](LICENSE.md) for more information.
 [android_platform-url]: https://developer.android.com/index.html
 [android_studio-badge]: https://img.shields.io/badge/Android%20Studio-3.2.1+-green.svg
 [android_studio-url]: https://developer.android.com/studio/install
-[codebeat-badge]: https://codebeat.co/badges/f22bd54a-d944-440d-aa4d-3a99f79b41d3
