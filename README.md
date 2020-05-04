@@ -36,7 +36,7 @@ In this project We have used following Firebase serivces.
 - Install [Node](https://nodejs.org), [Watchman](https://facebook.github.io/watchman/) and [React Native](https://facebook.github.io/react-native/).
 
 
-## Firebase Steup
+## Firebase Setup
 - For Firebase setup you need follow this [instructions](https://firebase.google.com/docs/android/setup)
 
 ## Steps to Run
